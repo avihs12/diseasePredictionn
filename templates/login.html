@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Select Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            background-image: url('/Images/hospitalBg.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            margin: 10% auto;
+            width: 80%;
+            background: #fbf9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1E3A8A;
+        }
+
+        .loginModes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .login-option {
+            text-align: center;
+            flex: 1 1 30%;
+            min-width: 150px;
+            margin: 10px;
+        }
+
+        .login-option img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .login-option button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-option button:hover {
+            background-color: #4CAF50;
+        }
+
+        .login-option button:active {
+            background-color: #388e3c;
+        }
+
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                margin-top: 15%;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .login-option img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .login-option button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .loginModes {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .login-option {
+                flex: 1 1 100%;
+                margin: 10px 0;
+            }
+
+            h1 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .login-option img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .login-option button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Select Login</h1>
+        <div class="loginModes">
+            <div class="login-option">
+                <img src="{{url_for('static',filename='Images/Admin.png')}}" alt="Admin">
+                <br>
+                <button id="AdminLoginBtn">Admin Login</button>
+            </div>
+            <div class="login-option">
+                <img src="{{url_for('static',filename='/Images/Doctor.png')}}" alt="Doctor">
+                <br>
+                <button id="doctorLoginBtn">Doctor Login</button>
+            </div>
+            <div class="login-option">
+                <img src="{{url_for('static',filename='/Images/Patient.png')}}" alt="Patient">
+                <br>
+                <button id="patientLoginBtn">Patient Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/script.js"></script>
+    <script>
+        document.getElementById('AdminLoginBtn').addEventListener('click', function () {
+            window.location.href = "{{ url_for('adminlogin') }}";
+        });
+
+        document.getElementById('doctorLoginBtn').addEventListener('click', function () {
+            window.location.href = "{{ url_for('doctorlogin') }}";
+        });
+
+        document.getElementById('patientLoginBtn').addEventListener('click', function () {
+            window.location.href = "{{ url_for('patientlogin') }}";
+        });
+//         @app.route('/doctorlogin')
+// def doctor_dashboard():
+//     return render_template('doctorlogin.html')
+
+// # Admin Dashboard
+// @app.route('/admindlogin')
+// def admin_dashboard():
+//     return render_template('adminlogin.html')
+
+// @app.route('/patientlogin')
+// def patient_dashboard():
+//     return render_template('patientlogin.html')
+
+    </script>
+</body>
+
+</html>

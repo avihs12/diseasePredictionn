@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Home Page</title>
+</head>
+
+<body>
+    <div clss="main">
+        <div class="nav">
+            <div class="title_nav">
+                <h1 class="titleofnav">Health care portal</h1>
+            </div>
+            <div class="links">
+                <a href="{{ url_for('about') }}">about</a>
+                <a href="{{ url_for('explore') }}">explore</a>
+                <a href="{{ url_for('contact') }}">contact</a>
+                <a href="{{ url_for('signup') }}">signup</a>
+                <a href="{{ url_for('login') }}">login</a>
+            </div>
+
+        </div>
+        <div class="indexInfo">
+            <div>
+                <p class="hInfo">
+                    Welcome to Health Connect, where advanced machine learning meets healthcare to provide accurate
+                    disease predictions and personalized health insights. Our platform empowers individuals and
+                    healthcare professionals by analyzing health data through cutting-edge AI algorithms, offering early
+                    detection of potential health risks and tailored recommendations. Designed with a user-friendly
+                    interface, robust data security, and validation by medical experts, we ensure your experience is
+                    both seamless and reliable. Whether you seek proactive risk assessment or integration with wearable
+                    devices, our mission is to revolutionize healthcare by making it proactive, accessible, and
+                    data-driven. Start your journey to a healthier tomorrow today!
+                </p>
+            </div>
+            <img class="bgImgindex" src="{{ url_for('static', filename='images/home.png') }}" alt="HealthConnect Banner">
+
+        </div>
+
+        <div class="info-box">
+            <h2>Connecting Patients, Doctors, and Administrators</h2>
+            <p>Our platform helps in disease prediction, consultations, and management.</p>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

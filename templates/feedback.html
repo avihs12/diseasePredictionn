@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/feedback.css')}}">
+</head>
+
+<body>
+    <div class="feedback-container">
+        <h2>Feedback Form</h2>
+        <div id="form-message-warning" class="mb-4" style="color: red; display: none;">
+            Please fill in all fields.
+        </div>
+        <div id="form-message-success" class="mb-4" style="color: green; display: none;">
+        </div>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <div class="rating">
+                    <input type="radio" id="rating5" name="rating" value="5"><label for="rating5">★</label>
+                    <input type="radio" id="rating4" name="rating" value="4"><label for="rating4">★</label>
+                    <input type="radio" id="rating3" name="rating" value="3"><label for="rating3">★</label>
+                    <input type="radio" id="rating2" name="rating" value="2"><label for="rating2">★</label>
+                    <input type="radio" id="rating1" name="rating" value="1"><label for="rating1">★</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message"></label>
+                <textarea id="message" name="message" placeholder="Write your feedback here" required></textarea>
+            </div>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+
+        <div id="responseMessage"></div>
+    </div>
+
+    <script>
+
+        document.getElementById("feedbackForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const rating = document.querySelector('input[name="rating"]:checked');
+
+            if (!name || !message || !rating.value) {
+                document.getElementById('form-message-warning').style.display = 'block';
+                return;
+            } else {
+                document.getElementById('form-message-warning').style.display = 'none';
+            }
+
+            const feedbackData = {
+                name: name,
+                message: message,
+                rating: rating.value
+            };
+
+            let feedbackArray = JSON.parse(localStorage.getItem('feedbackData')) || [];
+
+            feedbackArray.push(feedbackData);
+
+            localStorage.setItem('feedbackData', JSON.stringify(feedbackArray));
+
+            document.getElementById('form-message-success').style.display = 'block';
+            document.getElementById('responseMessage').innerText = 'Your feedback has been submitted successfully!';
+
+            document.getElementById('feedbackForm').reset();
+        });
+
+
+    </script>
+</body>
+
+</html>

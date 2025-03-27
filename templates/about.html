@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/about.css')}}">
+    <title>About Us</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>About HealthConnect</h1>
+        <img src="{{ url_for('static',filename='Images/About2.png')}}" alt="About Us Image">
+
+        <p>
+            HealthConnect is a platform designed to bridge the gap between patients and healthcare providers.
+            Our mission is to provide easy access to medical consultations, disease predictions, and health management tools.
+        </p>
+
+        <h2>Our Vision</h2>
+        <p>
+            We envision a world where healthcare is accessible to everyone, regardless of their location or background.
+            Our goal is to empower patients with the information they need to make informed health decisions.
+        </p>
+
+        <h2>Our Services</h2>
+        <div class="services-container">
+            <div class="service-card">
+                <h3>Consultation Services</h3>
+                <p>Connect with qualified healthcare professionals for virtual consultations.</p>
+            </div>
+            <div class="service-card">
+                <h3>Disease Prediction</h3>
+                <p>Utilize our AI-driven tools to predict potential health issues based on symptoms.</p>
+            </div>
+            <div class="service-card">
+                <h3>Health Management</h3>
+                <p>Track your health metrics and receive personalized recommendations.</p>
+            </div>
+            <div class="service-card">
+                <h3>Patient Education</h3>
+                <p>Access a wealth of resources to educate yourself about various health topics.</p>
+            </div>
+        </div>
+
+        <h2>Why Choose Us?</h2>
+        <p>
+            At HealthConnect, we prioritize patient satisfaction and strive to provide the best healthcare experience.
+            Here are a few reasons to choose us:
+        </p>
+        <ul>
+            <li>Experienced healthcare professionals</li>
+            <li>User-friendly platform</li>
+            <li>24/7 access to healthcare services</li>
+            <li>Secure and confidential consultations</li>
+        </ul>
+
+        <h2>Join Us Today!</h2>
+        <p>
+            Become a part of the HealthConnect community and take charge of your health.
+            <a href="{{url_for('signup')}}">Sign up</a> today to start your journey towards better health!
+        </p>
+
+        <img src="{{ url_for('static',filename='Images/Team.png')}}" alt="Healthcare Team" class="secondary-image">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Patient Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #39937e, #676e7b);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: #fff;
+            color: #333;
+            border-radius: 15px;
+            padding: 30px 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #4a4a4a;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #777;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        button {
+            padding: 15px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            background: #388e3c;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+
+        button:active {
+            transform: translateY(1px);
+            box-shadow: none;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+                padding: 12px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 0.9rem;
+            }
+
+            button {
+                font-size: 0.8rem;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Profile</h1>
+        <div class="profile-info">
+            <h2>Welcome to Your Personal Health Space</h2>
+            <button onclick="checkDisease()">Check Disease</button>
+            <button onclick="giveFeedback()">Give Feedback</button>
+            <button onclick="viewProfile()">View Profile</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <Script>
+        function checkDisease(){
+            window.location.href = "{{url_for('checkDisease')}}";  
+        }
+
+        function viewProfile(){
+            window.location.href = "{{url_for('patientOwnProfile')}}";  
+        }
+
+        function giveFeedback(){
+            window.location.href = "{{url_for('feedBack')}}";  
+        }
+        
+    </Script>
+</body>
+</html>

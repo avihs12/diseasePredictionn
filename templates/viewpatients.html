@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .table-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f1f1f1;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+            transform: scale(1.02);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        tr:first-child th {
+            border-top: none;
+        }
+
+        td,
+        th {
+            border-left: 1px solid #ddd;
+        }
+
+        td:last-child,
+        th:last-child {
+            border-right: 1px solid #ddd;
+        }
+
+        td:hover {
+            background-color: #e0f7fa;
+            color: #00796b;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="table-container">
+        <table class="tableD">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+
+    // const contactInfoArray = JSON.parse(localStorage.getItem('contactInfo')) || [];
+    // console.log((contactInfoArray.fullname));
+    // console.log((contactInfoArray.email));
+    // console.log((contactInfoArray.subject));
+    // console.log((contactInfoArray.message));
+
+    function populateTable() {
+        const patientsInfoArray = JSON.parse(localStorage.getItem('patient')) || [];
+        const tableBody = document.querySelector('.tableD tbody');
+        tableBody.innerHTML = '';
+
+        patientsInfoArray.forEach(patient => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+            <td>${patient.username}</td>
+            <td>${patient.mobile}</td>
+            <td>${patient.address}</td>
+            <td>${patient.age}</td>
+            <td>${patient.gender}</td>
+        `;
+            tableBody.appendChild(row);
+        });
+    }
+    populateTable();
+
+</script>
+
+</html>

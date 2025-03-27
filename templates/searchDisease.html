@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .symptoms-list {
+            display: flex;
+            flex-wrap: wrap;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .symptom-item {
+            width: 50%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 1%;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .bullets {
+            list-style-type: none
+        }
+
+        .resetBtn {
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 10px;
+            margin-bottom: 1%;
+        }
+
+        .resetBtn button {
+            width: 10%;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Symptom Checker</h1>
+        <div class="resetBtn">
+            <button onclick="resetData()">reset</button>
+        </div>
+        <!-- Search box to filter symptoms -->
+        <input type="text" class="search-box" id="search-box" placeholder="Search for symptoms..."
+            onkeyup="filterSymptoms()">
+
+        <form action="{{url_for('predict')}}" method="POST">
+            <!-- Symptom checkboxes dynamically rendered -->
+            <div class="symptoms-list" id="symptoms-list">
+                {% for symptom in symptoms %}
+                <div class="symptom-item">
+                    <label>
+                        <input type="checkbox" name="symptoms" value="{{ symptom }}">
+                        {{ symptom.replace('_', ' ').capitalize() }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <p>Symptoms passed to template:</p>
+            <button type="submit">Predict Disease</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result">
+            <p><strong class="diseaseResult">{{ prediction_text }}</strong></p>
+            {% if specialist_text %}
+            <p>suggested Specialist: <strong class="specialistResult">{{ specialist_text }}</strong></p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if selected_symptoms %}
+        <div class="result">
+            <p>Selected Symptoms:</p>
+            <ul class="bullets">
+                {% for symptom in selected_symptoms %}
+                <li class="listOfresult">{{ symptom.replace('_', ' ').capitalize() }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function filterSymptoms() {
+            const searchInput = document.getElementById('search-box').value.toLowerCase();
+            const symptomsList = document.getElementById('symptoms-list');
+            const symptomItems = symptomsList.getElementsByClassName('symptom-item');
+
+            for (let i = 0; i < symptomItems.length; i++) {
+                const label = symptomItems[i].getElementsByTagName('label')[0];
+                const text = label.innerText.toLowerCase();
+
+                if (text.includes(searchInput)) {
+                    symptomItems[i].style.display = 'block';
+                } else {
+                    symptomItems[i].style.display = 'none';
+                }
+            }
+        }
+        function resetData() {
+            const resultDisease = document.querySelector('.diseaseResult')
+            if (resultDisease) {
+                resultDisease.innerHTML = "";
+            }
+            const selectedItems = document.querySelectorAll('.listOfresult');
+            if (selectedItems) {
+                selectedItems.forEach(item => {
+                    item.innerHTML = "";
+                });
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/signup.css')}}">
+    <title>Signup</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Signup</h1>
+
+        <div class="role-images">
+            <div>
+                <img src="{{ url_for('static', filename='Images/Doctor.png') }}" alt="Doctor"
+                    onclick="selectRole('doctor')">
+                <p>Doctor</p>
+            </div>
+            <div>
+                <img src="{{ url_for('static', filename='Images/Patient.png') }}" alt="Patient"
+                    onclick="selectRole('patient')">
+                <p>Patient</p>
+            </div>
+        </div>
+
+        <form id="signupForm" onsubmit="validateForm(event)">
+            <select id="role" name="role" onchange="showRoleFields()" required>
+                <option value="">--Select Role--</option>
+                <option value="doctor">Doctor</option>
+                <option value="patient">Patient</option>
+            </select>
+
+            <div id="doctorFields" class="role-fields" style="display:none;">
+                <input type="text" placeholder="Username" id="doctorUsername" name="doctorUsername" required disabled>
+                <input type="password" placeholder="Password" id="doctorPassword" name="doctorPassword" required
+                    disabled>
+                <input type="text" placeholder="Medical Qualifications" id="doctorQualifications"
+                    name="doctorQualifications" required disabled>
+                <input type="text" placeholder="Specialty" id="doctorSpecialty" name="doctorSpecialty" required
+                    disabled>
+            </div>
+
+            <div id="patientFields" class="role-fields" style="display:none;">
+                <input type="text" placeholder="Username" id="patientUsername" name="patientUsername" required disabled>
+                <input type="password" placeholder="Password" id="patientPassword" name="patientPassword" required
+                    disabled>
+                <input type="text" placeholder="Mobile Number" id="patientMobile" name="patientMobile" required
+                    disabled>
+                <input type="text" placeholder="Address" id="patientAddress" name="patientAddress" required disabled>
+                <input type="text" placeholder="Gender" id="patientGender" name="patientGender" required disabled>
+                <input type="text" placeholder="Age" id="patientAge" name="patientAge" required disabled>
+            </div>
+
+            <button type="submit">Signup</button>
+
+            <p class="error" id="errorMessage" style="display:none;"></p>
+        </form>
+
+        <p>Already registered? <a href="{{ url_for('login') }}">Login here</a></p>
+    </div>
+    <script>
+
+        function showRoleFields() {
+            const role = document.getElementById('role').value;
+            const doctorFields = document.getElementById('doctorFields');
+            const patientFields = document.getElementById('patientFields');
+
+            resetFields();
+
+            if (role === 'doctor') {
+                doctorFields.style.display = 'block';
+                patientFields.style.display = 'none';
+                enableFields('doctor');
+            } else if (role === 'patient') {
+                patientFields.style.display = 'block';
+                doctorFields.style.display = 'none';
+                enableFields('patient');
+            } else {
+                doctorFields.style.display = 'none';
+                patientFields.style.display = 'none';
+            }
+        }
+
+        function resetFields() {
+            const allInputs = document.querySelectorAll('#doctorFields input, #patientFields input');
+            allInputs.forEach((input) => {
+                input.disabled = true;
+                input.required = false;
+                input.value = '';
+            });
+        }
+
+        function enableFields(role) {
+            if (role === 'doctor') {
+                document.getElementById('doctorUsername').disabled = false;
+                document.getElementById('doctorUsername').required = true;
+                document.getElementById('doctorPassword').disabled = false;
+                document.getElementById('doctorPassword').required = true;
+                document.getElementById('doctorQualifications').disabled = false;
+                document.getElementById('doctorQualifications').required = true;
+                document.getElementById('doctorSpecialty').disabled = false;
+                document.getElementById('doctorSpecialty').required = true;
+            } else if (role === 'patient') {
+                document.getElementById('patientUsername').disabled = false;
+                document.getElementById('patientUsername').required = true;
+                document.getElementById('patientPassword').disabled = false;
+                document.getElementById('patientPassword').required = true;
+                document.getElementById('patientMobile').disabled = false;
+                document.getElementById('patientMobile').required = true;
+                document.getElementById('patientAddress').disabled = false;
+                document.getElementById('patientAddress').required = true;
+                document.getElementById('patientAge').disabled = false;
+                document.getElementById('patientAge').required = true;
+                document.getElementById('patientGender').disabled = false;
+                document.getElementById('patientGender').required = true;
+
+            }
+        }
+
+        function validateForm(event) {
+            event.preventDefault();
+
+            const role = document.getElementById('role').value;
+            if (role === 'doctor') {
+                const username = document.getElementById('doctorUsername').value.trim();
+                const password = document.getElementById('doctorPassword').value.trim();
+                const qualifications = document.getElementById('doctorQualifications').value.trim();
+                const speciality = document.getElementById('doctorSpecialty').value.trim();
+
+                if (localStorage.getItem('doctor_' + username) || localStorage.getItem('patient_' + username)) {
+                    alert('Username already exists! Please choose a different username.');
+                    return;
+                }
+                const doctorDetails = { username, password, qualifications, speciality };
+                localStorage.setItem('doctor_' + username, JSON.stringify(doctorDetails));
+                alert("Doctor details saved successfully!");
+            } else if (role === 'patient') {
+                const username = document.getElementById('patientUsername').value.trim();
+                const password = document.getElementById('patientPassword').value.trim();
+                const mobile = document.getElementById('patientMobile').value.trim();
+                const address = document.getElementById('patientAddress').value.trim();
+                const age = document.getElementById('patientAge').value.trim();
+                const gender = document.getElementById('patientGender').value.trim();
+
+                console.log(age + "" + gender);
+
+
+                if (localStorage.getItem('doctor_' + username) || localStorage.getItem('patient_' + username)) {
+                    alert('Username already exists! Please choose a different username.');
+                    return;
+                }
+
+                const patientDetails = { username, password, mobile, address, age, gender };
+
+                localStorage.setItem('patient_' + username, JSON.stringify(patientDetails));
+
+                let patientInfoArray = JSON.parse(localStorage.getItem('patient')) || [];
+
+                if (!Array.isArray(patientInfoArray)) {
+                    patientInfoArray = [];
+                }
+                patientInfoArray.push(patientDetails);
+                if (username && password && mobile && address && age && gender) {
+                    localStorage.setItem('patient', JSON.stringify(patientInfoArray));
+                    alert("Patient details saved successfully!");
+                }
+            } else {
+                alert("Please select a role.");
+            }
+
+            document.getElementById('signupForm').reset();
+            document.getElementById('role').value = '';
+            showRoleFields();
+        }
+
+    </script>
+</body>
+
+</html>
